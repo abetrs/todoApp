@@ -2,9 +2,12 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "A simple todo app to test my knowledge of node.js",
-  "main": "app.js",
+  "main": "src/app.js",
   "author": "Abe TRS",
   "license": "MIT",
+  "scripts": {
+    "start": "nodemon ."
+  },
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
@@ -12,5 +15,8 @@
     "jsonwebtoken": "^8.4.0",
     "mongoose": "^5.3.12",
     "morgan": "^1.9.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.6"
   }
 }
