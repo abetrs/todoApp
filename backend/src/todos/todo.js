@@ -29,9 +29,14 @@ router.post('/newTodo', (req, res, next) => {
         body: req.body.body,
     });
     newTodo.save()
-    .then(_ => {
+    .then(savedTodo => {
         res.send({
-            message: "Success"
+            message: "Success",
+            savedTodo: {
+                _id: savedTodo._id,
+                title: savedTodo.title,
+                body: savedTodo.body
+            }
         });
     }).catch(err => {
         message: new Error('You are missing something in the body');
