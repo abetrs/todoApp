@@ -38,9 +38,18 @@ router.post('/newTodo', (req, res, next) => {
     });
 });
 
-router.delete('/delTodo', (req, res, next) => {
-    res.send({
-        "Deleted post": req.body
+router.delete('/delTodo/:todoId', (req, res, next) => {
+    Todo.findByIdAndDelete({ _id: req.params.todoId })
+    .exec()
+    .then(delTodo => {
+        res.send({
+            message: "Successfully Deleted todo",
+            todo: delTodo
+        });
+    }).catch(err => {
+        res.send({
+          error: err  
+        });
     });
 });
 
