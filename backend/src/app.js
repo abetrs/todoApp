@@ -17,7 +17,9 @@ app.use(cors());
 app.use(morgan('short'));
 app.use(errorhandler());
 app.use(helmet());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({
+  extended: false
+}));
 app.use(express.json());
 // Routes
 app.use('/todos', todoRoutes);
