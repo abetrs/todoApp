@@ -11,8 +11,6 @@ const cors = require('cors');
 const morgan = require('morgan');
 const helmet = require('helmet');
 const errorhandler = require('errorhandler');
-// For environment variables
-require('dotenv').config();
 // Own files
 const todoRoutes = require('./todos/todo');
 const userRoutes = require('./auth/user');

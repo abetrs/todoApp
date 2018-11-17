@@ -22,14 +22,31 @@ router.post('/signup', async (req, res, next) => {
   }
 });
 router.post('/login', (req, res, next) => {
-  res.send({
-    message: "You logged in"
-  })
-});
-router.post('/logout', (req, res, next) => {
-  res.send({
-    message: "Logged out"
-  });
+  User.findOne({ username: req.body.username })
+  .exec()
+  .then(user => {
+    if(user) {
+      payload = {
+        _id: user._id,
+        username: user.username
+      }
+      const token = jwt.sign(payload, process.env.TOKEN_SECRET, { expiresIn: '1d' });
+      if (token) {
+        res.send({
+          token: token
+        });
+      } else {
+        res.status(500).send({
+          error: "Internal Server Error 500",
+          stack: err.stack
+        });
+      }
+    } else {
+      res.status(401).send({
+        error: "User not found"
+      })
+    }
+  }).catch(err => res.status(422).send({ error: err.stack }));
 });
 
 module.exports = router;
