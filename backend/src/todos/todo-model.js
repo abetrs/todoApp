@@ -8,6 +8,10 @@ const todoSchema = mongoose.Schema({
   body: {
     type: String,
     required: true
+  },
+  author: {
+    type: String,
+    required: true,
   }
 });
 

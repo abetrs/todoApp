@@ -4,20 +4,26 @@ const Todo = require('./todo-model');
 const auth = require('./auth');
 
 router.get('/getTodos', auth, (req, res, next) => {
+  const resp = [];
   Todo.find()
-    .select('_id title body')
+    .select('_id title body author')
     .exec()
     .then(docs => {
-      res.send({ ...docs, data: req.data });
+      for(todo of docs) {
+        if (req.user.username === todo.author) {
+          resp.push(todo);
+        }
+      }
+      res.send(resp);
     }).catch(err => {
-      error: err
+      res.send({ error: err });
     });
 });
-router.get('/getTodos/:todoId', (req, res, next) => {
+router.get('/getTodos/:todoId', auth, (req, res, next) => {
   Todo.findById({
       _id: req.params.todoId
     })
-    .select('title body')
+    .select('title body author')
     .exec()
     .then(docs => {
       res.send(docs);
@@ -26,10 +32,11 @@ router.get('/getTodos/:todoId', (req, res, next) => {
     });
 });
 
-router.post('/newTodo', (req, res, next) => {
+router.post('/newTodo', auth, (req, res, next) => {
   const newTodo = new Todo({
     title: req.body.title,
     body: req.body.body,
+    author: req.user.username
   });
   newTodo.save()
     .then(savedTodo => {
@@ -38,15 +45,16 @@ router.post('/newTodo', (req, res, next) => {
         savedTodo: {
           _id: savedTodo._id,
           title: savedTodo.title,
-          body: savedTodo.body
+          body: savedTodo.body,
+          author: savedTodo.author
         }
       });
     }).catch(err => {
-      message: new Error('You are missing something in the body');
+      res.send({ message: err.stack });
     });
 });
 
-router.delete('/delTodo/:todoId', (req, res, next) => {
+router.delete('/delTodo/:todoId', auth, (req, res, next) => {
   Todo.findByIdAndDelete({
       _id: req.params.todoId
     })
