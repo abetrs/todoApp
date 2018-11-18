@@ -1,13 +1,14 @@
 const express = require('express');
 const router = express.Router();
 const Todo = require('./todo-model');
+const auth = require('./auth');
 
-router.get('/getTodos', (req, res, next) => {
+router.get('/getTodos', auth, (req, res, next) => {
   Todo.find()
     .select('_id title body')
     .exec()
     .then(docs => {
-      res.send(docs);
+      res.send({ ...docs, data: req.data });
     }).catch(err => {
       error: err
     });
