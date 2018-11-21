@@ -20,7 +20,9 @@ const port = process.env.PORT || 5000;
 const url = process.env.URL || 'localhost';
 
 // Using Middlewares 
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:3000'
+}));
 app.use(morgan('short'));
 app.use(errorhandler());
 app.use(helmet());
