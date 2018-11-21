@@ -1,31 +1,19 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
+    <nav>
+      <div id="nav">
+        <a href="#" class="brand-logo left">Todo App</a>
+        <ul class="right">
+          <li><router-link to="/">Home</router-link></li>
+          <li><router-link to="/login">Log in</router-link></li>
+          <li><router-link to="/signup">Sign Up</router-link></li>
+        </ul>
+      </div>
+    </nav>
     <router-view/>
   </div>
 </template>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-#nav {
-  padding: 30px;
-}
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
 </style>

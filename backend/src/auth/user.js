@@ -11,9 +11,10 @@ router.post('/signup', async (req, res, next) => {
       username: req.body.username,
       password: hashedPass
     });
-    await user.save();
+    const sendUser = await user.save();
     res.json({
-      message: "Done"
+      message: "Done",
+      user: user
     });
   } catch(err) {
     res.status(422).send({
