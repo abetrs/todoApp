@@ -14,6 +14,11 @@
 import axios from 'axios';
   export default {
     name: 'signup',
+    mounted() {
+      if (localStorage.token) {
+        this.$router.push('/');
+      }
+    },
     data: () => ({
       username: "",
       password: "",

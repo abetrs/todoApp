@@ -13,7 +13,12 @@
 <script>
 import axios from 'axios';
 export default {
-  name: 'login',
+  name: 'login',  
+  mounted() {
+    if (localStorage.token) {
+      this.$router.push('/');
+    }
+  },
   data: () => ({
       username: "",
       password: "",
@@ -31,6 +36,7 @@ export default {
       .then(resp => {
         localStorage.token = resp.data.token;
         this.$router.push('/')
+        location.reload();
       })
       .catch(err => {
         console.log(err);
@@ -40,6 +46,6 @@ export default {
         this.invalid = 'Please enter a username and password to continue'
       }
     }
-  },
+  }
 }
 </script>
