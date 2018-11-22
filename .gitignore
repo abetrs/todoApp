@@ -3,4 +3,4 @@ frontend/node_modules
 .vscode
 .DS_Store
 todo.md
-env.sh
+backend/nodemon.json

@@ -11,9 +11,10 @@ router.post('/signup', async (req, res, next) => {
       username: req.body.username,
       password: hashedPass
     });
-    await user.save();
+    const sendUser = await user.save();
     res.json({
-      message: "Done"
+      message: "Done",
+      user: user
     });
   } catch(err) {
     res.status(422).send({
@@ -21,26 +22,34 @@ router.post('/signup', async (req, res, next) => {
     });
   }
 });
-router.post('/login', (req, res, next) => {
+router.post('/login', async (req, res, next) => {
   User.findOne({ username: req.body.username })
   .exec()
   .then(user => {
     if(user) {
-      payload = {
+      const payload = {
         _id: user._id,
         username: user.username
       }
-      const token = jwt.sign(payload, process.env.TOKEN_SECRET, { expiresIn: '1d' });
-      if (token) {
-        res.send({
-          token: token
-        });
-      } else {
-        res.status(500).send({
-          error: "Internal Server Error 500",
-          stack: err.stack
-        });
-      }
+    bcrypt.compare(req.body.password, user.password).then(resp => {
+      if (resp) {
+        const token = jwt.sign(payload, process.env.TOKEN_SECRET, { expiresIn: '1d' });
+          if (token) {
+            res.send({
+              token: token
+            });
+          } else {
+            res.status(500).send({
+              error: "Internal Server Error 500",
+              stack: err.stack
+            });
+          }
+        } else {
+          res.status(401).send({
+            "error": "Incorrect Password"
+          })
+        }
+      }).catch(err => res.send({error: err}));
     } else {
       res.status(401).send({
         error: "User not found"
