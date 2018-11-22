@@ -1,10 +1,11 @@
 <template>
   <div id="app">
-    <nav>
+    <nav class="teal">
       <div id="nav">
         <a href="#" class="brand-logo left">Todo App</a>
         <ul class="right">
-          <li><router-link to="/">Home</router-link></li>
+          <li v-if="!loggedOut"><router-link to="/">Home</router-link></li>
+          <li v-if="!loggedOut"><router-link to="/newtodo">+</router-link></li>
           <li v-if="loggedOut"><router-link to="/login">Log in</router-link></li>
           <li v-if="loggedOut"><router-link to="/signup">Sign Up</router-link></li>
         </ul>

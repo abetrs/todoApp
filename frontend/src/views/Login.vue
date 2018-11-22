@@ -16,7 +16,7 @@ export default {
   name: 'login',  
   mounted() {
     if (localStorage.token) {
-      this.$router.push('/');
+      this.$router.push('/404');
     }
   },
   data: () => ({

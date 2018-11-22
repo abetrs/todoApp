@@ -16,7 +16,7 @@ import axios from 'axios';
     name: 'signup',
     mounted() {
       if (localStorage.token) {
-        this.$router.push('/');
+        this.$router.push('/404');
       }
     },
     data: () => ({

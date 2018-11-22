@@ -32,7 +32,6 @@ export default {
       }).then(resp => {
         resp.data.map(obj => {
           this.todos.push(obj)
-          console.log(obj)
         })
       }).catch(err => {
         console.log(err);
@@ -42,8 +41,7 @@ export default {
   methods: {
     delTodo(e) {
       const title = e.target.childNodes[0].textContent;
-      console.log(title, typeof title);
-      const find = this.todos.find(function(el){
+      const find = this.todos.find((el) => {
         return el.title === title;
       });
       const id = find._id;
@@ -52,7 +50,8 @@ export default {
         headers: {
           Authorization: 'Bearer ' + localStorage.token
         }
-      }).then(() => {
+      }).then(resp => {
+        console.log(resp.data);
         location.reload();
       });
     }
